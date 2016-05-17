@@ -19,4 +19,5 @@ printf "$commit_result"
 push_result=$(echo "$(git push origin $branch_name)" 2>&1) 
 printf "$push_result"
 
-# making a pull request
+# create a pull request
+$(echo "$(git request-pull master origin $FLAG)" 2>&1)
