@@ -16,7 +16,7 @@ TEST_OUT=$(echo "$(git push origin $FLAG)" 2>&1)
 
 printf "$FLAG\n"
 
-# enter your username and password over here
+# enter your username and password over here to make a pull request
 GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u username:password   https://api.bitbucket.org/2.0/repositories/username/project_name/pullrequests   -d '
  {
      "title": "title",
