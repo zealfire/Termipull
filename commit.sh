@@ -5,8 +5,7 @@ FLAG=$(git symbolic-ref HEAD | cut -d/ -f3)
 printf "$FLAG\n"
 
 # enter the commit message
-echo "enter the commit message:"
-read commit_message
+read -r -p "Enter the commit message: " commit_message
 
 # do to the commit
 TEST_OUT=$(echo "$(git commit -m $commit_message)" 2>&1) 
@@ -17,7 +16,8 @@ TEST_OUT=$(echo "$(git push origin $FLAG)" 2>&1)
 
 printf "$FLAG\n"
 
-GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u username:password   https://api.bitbucket.org/2.0/repositories/zealfire_/test_repo/pullrequests   -d '
+# enter your username and password over here
+GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u username:password   https://api.bitbucket.org/2.0/repositories/username/project_name/pullrequests   -d '
  {
      "title": "title",
      "description": "Merge from upstream.",
@@ -26,7 +26,7 @@ GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u username:passwo
              "name": "'"$FLAG"'"
          },
          "repository": {
-             "full_name": "zealfire_/test_repo"
+             "full_name": "username/project_name"
          }
      },
      "destination": {
@@ -38,8 +38,4 @@ GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u username:passwo
  }
 ')
 
-  printf "\n\n$GITPULLREQ\n"
-# enter your username and password over here
-
-# create a pull request
-# $(echo "$(git request-pull master origin $FLAG)" 2>&1)
+printf "\n\n$GITPULLREQ\n"
