@@ -1,23 +1,45 @@
 #!/bin/bash
 
-# find all the branch
-all_branches=$(echo "$(git branch)" 2>&1)
-
 # find the current branch
-branch_name = $(echo "$all_branches"|grep -P '(?<=\*)[ ](.)*(?=)' -o 2>&1)
-printf "$branch_name"
+FLAG=$(git symbolic-ref HEAD | cut -d/ -f3)
+printf "$FLAG\n"
 
 # enter the commit message
-echo "enter the commit message: "
+echo "enter the commit message:"
 read commit_message
 
-do to the commit
-commit_result=$(echo "$(git commit -m $commit_message)" 2>&1) 
-printf "$commit_result"
+# do to the commit
+TEST_OUT=$(echo "$(git commit -m $commit_message)" 2>&1) 
+printf "$TEST_OUT\n"
 
 # pushing the changes to repository
-push_result=$(echo "$(git push origin $branch_name)" 2>&1) 
-printf "$push_result"
+TEST_OUT=$(echo "$(git push origin $FLAG)" 2>&1)
+
+printf "$FLAG\n"
+
+GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u username:password   https://api.bitbucket.org/2.0/repositories/zealfire_/test_repo/pullrequests   -d '
+ {
+     "title": "title",
+     "description": "Merge from upstream.",
+     "source": {
+         "branch": {
+             "name": "'"$FLAG"'"
+         },
+         "repository": {
+             "full_name": "zealfire_/test_repo"
+         }
+     },
+     "destination": {
+         "branch": {
+             "name": "master"
+         }
+     },
+     "close_source_branch": true
+ }
+')
+
+  printf "\n\n$GITPULLREQ\n"
+# enter your username and password over here
 
 # create a pull request
-$(echo "$(git request-pull master origin $FLAG)" 2>&1)
+# $(echo "$(git request-pull master origin $FLAG)" 2>&1)
