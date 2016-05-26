@@ -16,6 +16,9 @@ TEST_OUT=$(echo "$(git push origin $FLAG)" 2>&1)
 
 printf "$FLAG\n"
 
+GITPROJECT=$(grep 'url =' .git/config | sed -n 1p | cut -d/ -f5| cut -d. -f1)
+GITUSER=$(git config user.name)
+SOURCE_FULL_NAME="$GITUSER/$GITPROJECT"
 # enter your username and password over here to make a pull request
 GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u username:password   https://api.bitbucket.org/2.0/repositories/username/project_name/pullrequests   -d '
  {
@@ -26,7 +29,7 @@ GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u username:passwo
              "name": "'"$FLAG"'"
          },
          "repository": {
-             "full_name": "username/project_name"
+             "full_name": "'"$SOURCE_FULL_NAME"'"
          }
      },
      "destination": {
