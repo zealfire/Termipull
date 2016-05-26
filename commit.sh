@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# extracting password from other file, this is for security purpose
+file="constants.sh"     #the file where you keep your string name
+
+PASSWORD=$(cat "$file")
+
 # find the current branch
 FLAG=$(git symbolic-ref HEAD | cut -d/ -f3)
 
@@ -25,7 +30,7 @@ GITUSER=$(git config user.name)
 SOURCE_FULL_NAME="$GITUSER/$GITPROJECT"
 
 # enter your password over here to make a pull request
-GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":password   https://api.bitbucket.org/2.0/repositories/"$SOURCE_FULL_NAME"/pullrequests   -d '
+GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":"PASSWORD"  https://api.bitbucket.org/2.0/repositories/"$SOURCE_FULL_NAME"/pullrequests   -d '
  {
      "title": "title",
      "description": "Merge from upstream.",
