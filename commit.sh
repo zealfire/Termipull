@@ -17,8 +17,7 @@ COMMIT_MESSAGE="'$commit_message'"
 TEST_OUT=$(git commit -m "$COMMIT_MESSAGE")
 
 # pushing the changes to repository
-TEST_OUT=$(echo "$(git push origin $FLAG)" 2>&1)
-
+TEST_OUT=$(git push origin "$FLAG")
 
 # extracting the name of project
 GITPROJECT=$(grep 'url =' .git/config | sed -n 1p | cut -d/ -f5| cut -d. -f1)
@@ -29,8 +28,17 @@ GITUSER=$(git config user.name)
 # appending name of project to user name
 SOURCE_FULL_NAME="$GITUSER/$GITPROJECT"
 
+# extracting the name of project
+DESTGITPROJECT=$(grep 'url =' .git/config | sed -n 1p | cut -d/ -f5| cut -d. -f1)
+
+#extracting the name of user
+GITUSER=$(git config user.name)
+
+# appending name of project to user name
+SOURCE_FULL_NAME="$GITUSER/$GITPROJECT"
+
 # enter your password over here to make a pull request
-GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":"PASSWORD"  https://api.bitbucket.org/2.0/repositories/"$SOURCE_FULL_NAME"/pullrequests   -d '
+GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":"$PASSWORD"  https://api.bitbucket.org/2.0/repositories/"$SOURCE_FULL_NAME"/pullrequests   -d '
  {
      "title": "title",
      "description": "Merge from upstream.",
@@ -45,6 +53,9 @@ GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":"PAS
      "destination": {
          "branch": {
              "name": "master"
+         },
+         "repository": {
+             "full_name": "'"$SOURCE_FULL_NAME"'"
          }
      },
      "close_source_branch": true
