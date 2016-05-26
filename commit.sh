@@ -2,25 +2,30 @@
 
 # find the current branch
 FLAG=$(git symbolic-ref HEAD | cut -d/ -f3)
-printf "$FLAG\n"
 
 # enter the commit message
 read -r -p "Enter the commit message: " commit_message
+COMMIT_MESSAGE="'$commit_message'"
 
-# do to the commit
-TEST_OUT=$(echo "$(git commit -m $commit_message)" 2>&1) 
-printf "$TEST_OUT\n"
+
+# making the commit
+TEST_OUT=$(git commit -m "$COMMIT_MESSAGE")
 
 # pushing the changes to repository
 TEST_OUT=$(echo "$(git push origin $FLAG)" 2>&1)
 
-printf "$FLAG\n"
 
+# extracting the name of project
 GITPROJECT=$(grep 'url =' .git/config | sed -n 1p | cut -d/ -f5| cut -d. -f1)
+
+#extracting the name of user
 GITUSER=$(git config user.name)
+
+# appending name of project to user name
 SOURCE_FULL_NAME="$GITUSER/$GITPROJECT"
-# enter your username and password over here to make a pull request
-GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u username:password   https://api.bitbucket.org/2.0/repositories/username/project_name/pullrequests   -d '
+
+# enter your password over here to make a pull request
+GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":zeal18575   https://api.bitbucket.org/2.0/repositories/"$SOURCE_FULL_NAME"/pullrequests   -d '
  {
      "title": "title",
      "description": "Merge from upstream.",
