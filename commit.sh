@@ -37,7 +37,7 @@ DEST_GITUSER=$(grep 'url =' .git/config | sed -n 2p | cut -d/ -f4)
 # appending name of project to user name
 DEST_FULL_NAME="$DEST_GITUSER/$DEST_GITPROJECT"
 
-# enter your password over here to make a pull request
+# the password entered by you in constants.sh would be use here to make a  pull request
 GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":"$PASSWORD"  https://api.bitbucket.org/2.0/repositories/"$DEST_FULL_NAME"/pullrequests   -d '
  {
      "title": "title",
