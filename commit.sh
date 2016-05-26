@@ -25,7 +25,7 @@ GITUSER=$(git config user.name)
 SOURCE_FULL_NAME="$GITUSER/$GITPROJECT"
 
 # enter your password over here to make a pull request
-GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":zeal18575   https://api.bitbucket.org/2.0/repositories/"$SOURCE_FULL_NAME"/pullrequests   -d '
+GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":password   https://api.bitbucket.org/2.0/repositories/"$SOURCE_FULL_NAME"/pullrequests   -d '
  {
      "title": "title",
      "description": "Merge from upstream.",
