@@ -29,13 +29,13 @@ GITUSER=$(git config user.name)
 SOURCE_FULL_NAME="$GITUSER/$GITPROJECT"
 
 # extracting the name of project
-DESTGITPROJECT=$(grep 'url =' .git/config | sed -n 1p | cut -d/ -f5| cut -d. -f1)
+DEST_GITPROJECT=$(grep 'url =' .git/config | sed -n 2p | cut -d/ -f5| cut -d. -f1)
 
 #extracting the name of user
-GITUSER=$(git config user.name)
+DEST_GITUSER=$(grep 'url =' .git/config | sed -n 2p | cut -d/ -f4)
 
 # appending name of project to user name
-SOURCE_FULL_NAME="$GITUSER/$GITPROJECT"
+DEST_FULL_NAME="$DEST_GITUSER/$DEST_GITPROJECT"
 
 # enter your password over here to make a pull request
 GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":"$PASSWORD"  https://api.bitbucket.org/2.0/repositories/"$SOURCE_FULL_NAME"/pullrequests   -d '
@@ -55,7 +55,7 @@ GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":"$PA
              "name": "master"
          },
          "repository": {
-             "full_name": "'"$SOURCE_FULL_NAME"'"
+             "full_name": "'"$DEST_FULL_NAME"'"
          }
      },
      "close_source_branch": true
