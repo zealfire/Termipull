@@ -41,15 +41,10 @@ DEST_FULL_NAME="$DEST_GITUSER/$DEST_GITPROJECT"
 read -r -p "Enter the title of commit: " title
 TITLE="'$title'"
 
-# enter the description of commit
-read -r -p "Enter the description of commit: " description
-DESCRIPTION="'$description'"
-
 # the password entered by you in constants.sh would be use here to make a  pull request
 GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":"$PASSWORD"  https://api.bitbucket.org/2.0/repositories/"$DEST_FULL_NAME"/pullrequests   -d '
  {
      "title": "'"$TITLE"'",
-     "description": "'"$DESCRIPTION"'",
      "source": {
          "branch": {
              "name": "'"$FLAG"'"
