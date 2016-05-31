@@ -63,6 +63,11 @@ GITPULLREQ=$(curl -X POST -H "Content-Type: application/json" -u "$GITUSER":"$PA
              "name": "master"
          }
      },
+     "reviewers": [
+         {
+             "username": ""
+         }
+     ],
      "close_source_branch": true
  }
 ')
