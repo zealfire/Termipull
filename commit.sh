@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # extracting password from other file, this is for security purpose
-file="constants.sh"     #the file where you keep your string name, this file needs to be in same folder as this one.
+file="constants.sh"     #the file where you keep your string name, location of this file needs to be in same folder as this one.
 
 PASSWORD=$(cat "$file")
 
