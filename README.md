@@ -11,7 +11,9 @@ In order to avoid entering your username and password everytime you want to push
 git config --global credential.helper 'cache --timeout 3600'
 
 # How to use
-Copy both commit.sh and constants.sh to project folder
-In constants.sh enter your password to bitbucket, no need to enter a newline (only passwords need to be enter, remove the comment currently present)
+Copy both commit.sh and constants.sh to project's folder.
+
+In constants.sh enter your password to bitbucket, no need to enter a newline (only passwords need to be enter, remove the comment currently present).
+
 Once you have added the changes which want to push, simply run commit.sh file.
 Work in progress...
