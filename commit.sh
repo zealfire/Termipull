@@ -12,16 +12,11 @@ FLAG=$(git symbolic-ref HEAD | cut -d/ -f3)
 read -r -p "Enter the commit message: " commit_message
 COMMIT_MESSAGE="'$commit_message'"
 
-
 # making the commit
 TEST_OUT=$(git commit -m "$COMMIT_MESSAGE")
 
 # pushing the changes to repository
 TEST_OUT=$(git push origin "$FLAG")
-
-# expect "Enter the number1 :" { send "12\r" }
-# expect "Enter the number2 :" { send "23\r" }
-
 
 # extracting the name of project
 GITPROJECT=$(grep 'url =' .git/config | sed -n 1p | cut -d/ -f5| cut -d. -f1)
